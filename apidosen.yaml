@@ -1,0 +1,443 @@
+openapi: 3.0.1
+info:
+  title: API Dosen V2
+  description: |-
+    Ini adalah API Dosen V2 dari AIS UIN Jakarta.
+  contact: {}
+  version: "1.0"
+servers:
+- url: http://103.229.202.110:8080/ais/resources
+tags:
+- name: dosenv2
+
+paths:
+  /dosen-v2/login/{username}/{password}:
+    post:
+      tags:
+        - dosenv2
+      summary: '1. Login Dosen'
+      description: ''
+      operationId: login
+      parameters:
+        - name: username
+          in: path
+          description: Username Dosen
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: path
+          description: Password Dosen
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+        '400':
+          description: username/password yang anda masukkan salah
+  /dosen-v2/biodata:
+    get:
+      tags:
+        - dosenv2
+      summary: '2. Biodata Dosen'
+      description: ''
+      parameters:
+      # - name: token
+      #   in: query
+      #   description: ''
+      #   required: true
+      #   style: form
+      #   explode: true
+      #   schema:
+      #     type: string
+       - name: token
+         in: header
+         description: authorization header
+         required: true
+         style: simple
+         explode: true
+         schema:
+           type: string
+      operationId: biodata
+      responses:
+        '200':
+          description: successful
+  /dosen-v2/avatar:
+    get:
+      tags:
+        - dosenv2
+      summary: '3. Avatar Dosen'
+      description: ''
+      operationId: avatar
+      parameters:
+        - name: token
+          in: header
+          description: authorization header
+          required: true
+          style: simple
+          explode: true
+          schema:
+           type: string
+      responses:
+        '200':
+          description: successful
+  /dosen-v2/pembimbing_akademik:
+    get:
+      tags:
+        - dosenv2
+      summary: '4. Pembimbing Akademik'
+      description: ''
+      operationId: pembimbingAkademik
+      parameters:
+        - name: token
+          in: header
+          description: authorization header
+          required: true
+          style: simple
+          explode: true
+          schema:
+           type: string
+      responses:
+        '200':
+          description: successful
+  /dosen-v2/pembimbing_skripsi:
+    get:
+      tags:
+        - dosenv2
+      summary: '5. Pembimbing Skripsi'
+      description: ''
+      operationId: pembimbingSkripsi
+      parameters:
+        - name: token
+          in: header
+          description: authorization header
+          required: true
+          style: simple
+          explode: true
+          schema:
+           type: string
+      responses:
+        '200':
+          description: successful
+  /dosen-v2/ta:
+    get:
+      tags:
+        - dosenv2
+      summary: '6. Tahun Akademik'
+      description: ''
+      security: []
+      operationId: tahunAkademik
+      parameters:
+        - name: token
+          in: header
+          description: authorization header
+          required: true
+          style: simple
+          explode: true
+          schema:
+           type: string
+      responses:
+        '200':
+          description: successful
+  /dosen-v2/perkuliahan/{ta}/{gag}:
+    get:
+      tags:
+        - dosenv2
+      summary: '7. Daftar Perkuliahan'
+      description: ''
+      security: []
+      operationId: daftarPerkuliahan
+      parameters:
+        - name: token
+          in: header
+          description: 'Authorization. Diambil dari header No.1 Login'
+          required: true
+          style: simple
+          explode: true
+          schema:
+           type: string
+        - name: ta
+          in: path
+          description: 'Diambil dari nomor 6. Tahun Akademik. Tuliskan pemisah tahun dengan tanda "-" (Contoh 2019-2020)'
+          required: true
+          schema:
+            type: string
+        - name: gag
+          in: path
+          description: 'Jika semester ganjil maka isikan 1, jika genap 0'
+          required: true
+          schema:
+            type: string
+            default: "1"
+            enum:
+              - "1"
+              - "0"
+      responses:
+        '200':
+          description: successful
+  /dosen-v2/status_pertemuan:
+    get:
+      tags:
+        - dosenv2
+      summary: '8. Status Pertemuan'
+      description: ''
+      security: []
+      operationId: statusPertemuan
+      parameters:
+        - name: token
+          in: header
+          description: 'Authorization. Diambil dari header No.1 Login'
+          required: true
+          style: simple
+          explode: true
+          schema:
+           type: string
+      responses:
+        '200':
+          description: successful
+  /dosen-v2/pertemuan/{idPerkuliahan}:
+    get:
+      tags:
+        - dosenv2
+      summary: '9. List Pertemuan Perkuliahan'
+      description: ''
+      security: []
+      operationId: listPertemuanPerkuliahan
+      parameters:
+        - name: token
+          in: header
+          description: 'Authorization. Diambil dari header No.1 Login'
+          required: true
+          style: simple
+          explode: true
+          schema:
+           type: string
+        - name: idPerkuliahan
+          in: path
+          description: 'idPerkuliahan: dari no 7. Daftar Perkuliahan: id'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+    post:
+      tags:
+        - dosenv2
+      summary: '10. Menyimpan Pertemuan Mahasiswa'
+      description: ''
+      security: []
+      operationId: menyimpanPertemuanMahasiswa
+      parameters:
+        - name: token
+          in: header
+          description: 'Authorization. Diambil dari header No.1 Login'
+          required: true
+          style: simple
+          explode: true
+          schema:
+           type: string
+        - name: idPerkuliahan
+          in: path
+          description: 'idPerkuliahan: dari no 7. Daftar Perkuliahan: id'
+          required: true
+          schema:
+            type: string
+        # - name: idPertemuan
+        #   in: path
+        #   description: 'idPertemuan: dari no 8. Daftar Pertemuan: id'
+        #   required: true
+        #   schema:
+        #     type: string
+      responses:
+        '200':
+          description: successful
+  /dosen-v2/hapus_pertemuan/{idPertemuan}:
+    get:
+      tags:
+        - dosenv2
+      summary: '11. Hapus Pertemuan Perkuliahan'
+      description: ''
+      security: []
+      operationId: hapusPertemuanPerkuliahan
+      parameters:
+        - name: token
+          in: header
+          description: 'Authorization. Diambil dari header No.1 Login'
+          required: true
+          style: simple
+          explode: true
+          schema:
+           type: string
+        - name: idPertemuan
+          in: path
+          description: 'idPertemuan: dari no 8. Daftar Pertemuan: id'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+  /dosen-v2/status_absensi:
+    get:
+      tags:
+        - dosenv2
+      summary: '12. Status Absensi'
+      description: ''
+      security: []
+      operationId: statusAbsensi
+      parameters:
+        - name: token
+          in: header
+          description: authorization header
+          required: true
+          style: simple
+          explode: true
+          schema:
+           type: string
+      responses:
+        '200':
+          description: successful
+  /dosen-v2/daftar_absensi/{idPertemuan}:
+    get:
+      tags:
+        - dosenv2
+      summary: '13. Daftar Absensi PerPertemuan Perkuliahan'
+      description: ''
+      security: []
+      operationId: daftarAbsensiPerPertemuan
+      parameters:
+        - name: token
+          in: header
+          description: 'Authorization. Diambil dari header No.1 Login'
+          required: true
+          style: simple
+          explode: true
+          schema:
+           type: string
+        - name: idPertemuan
+          in: path
+          description: 'idPertemuan: dari no 8. Daftar Pertemuan: id'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+  /dosen-v2/absen/{idPertemuan}/{idMahasiswa}/{idStatus}:
+    post:
+      tags:
+        - dosenv2
+      summary: '14. Menyimpan Absen Pertemuan Mahasiswa'
+      description: ''
+      security: []
+      operationId: menyimpanAbsenPertemuanMahasiswa
+      parameters:
+        - name: token
+          in: header
+          description: 'Authorization. Diambil dari header No.1 Login'
+          required: true
+          style: simple
+          explode: true
+          schema:
+           type: string
+        - name: idPertemuan
+          in: path
+          description: 'idPertemuan: dari no 8. Daftar Pertemuan: id'
+          required: true
+          schema:
+            type: string
+        - name: idMahasiswa
+          in: path
+          description: 'idMahasiswa: dari no 13: mahasiswa'
+          required: true
+          schema:
+            type: string
+        - name: idStatus
+          in: path
+          description: 'idStatus: dari no 12. Status Absensi: id'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+  /dosen-v2/qrcode/{idPertemuan}:
+    get:
+      tags:
+        - dosenv2
+      summary: '15. Mendapatkan QR Code Pertemuan'
+      description: ''
+      security: []
+      operationId: mendapatkanQRCodePertemuan
+      parameters:
+        - name: token
+          in: header
+          description: 'Authorization. Diambil dari header No.1 Login'
+          required: true
+          style: simple
+          explode: true
+          schema:
+           type: string
+        - name: idPertemuan
+          in: path
+          description: 'idPertemuan: dari no 8. Daftar Pertemuan: id'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+  /dosen-v2/laporan_absensi/{idPerkuliahan}:
+    get:
+      tags:
+        - dosenv2
+      summary: '16. Mendapatkan Laporan Absensi Per Perkuliahan'
+      description: ''
+      security: []
+      operationId: mendapatkanLaporanAbsensiPerPerkuliahan
+      parameters:
+        - name: token
+          in: header
+          description: 'Authorization. Diambil dari header No.1 Login'
+          required: true
+          style: simple
+          explode: true
+          schema:
+           type: string
+        - name: idPerkuliahan
+          in: path
+          description: 'idPerkuliahan: dari no 7. Daftar Perkuliahan: id'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
+  /dosen-v2/laporan_agenda/{idPerkuliahan}:
+    get:
+      tags:
+        - dosenv2
+      summary: '17. Mendapatkan Laporan Agenda Per Perkuliahan'
+      description: ''
+      security: []
+      operationId: mendapatkanLaporanAgendaPerPerkuliahan
+      parameters:
+        - name: token
+          in: header
+          description: 'Authorization. Diambil dari header No.1 Login'
+          required: true
+          style: simple
+          explode: true
+          schema:
+           type: string
+        - name: idPerkuliahan
+          in: path
+          description: 'idPerkuliahan: dari no 7. Daftar Perkuliahan: id'
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful
