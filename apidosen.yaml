@@ -6,7 +6,7 @@ info:
   contact: {}
   version: "1.0"
 servers:
-- url: https://103.229.202.110:8080/ais/resources
+- url: http://103.229.202.110:8080/ais/resources
 tags:
 - name: dosenv2
 
